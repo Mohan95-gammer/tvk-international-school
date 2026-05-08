@@ -1005,5 +1005,28 @@
         // Smooth fade-up for initial elements on DOM ready
         document.addEventListener('DOMContentLoaded',onAppear);
     </script>
+    <style>
+  /* Disable text selection */
+  body {
+    user-select: none;
+  }
+</style>
+
+<script>
+  // Disable right-click
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    alert("⚠️ Protected by TVK (Mohan) — Copying is not allowed!");
+  });
+
+  // Disable keyboard shortcuts (Ctrl+C, Ctrl+U, Ctrl+S)
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's')) {
+      e.preventDefault();
+      alert("⚠️ Protected by TVK International School — Copying is not allowed!");
+    }
+  });
+</script>
+
 </body>
 </html>
