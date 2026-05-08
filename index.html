@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunrise Public School</title>
+    <!-- Internal CSS for styling and responsiveness -->
+    <style>
+        /* Reset some default styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f6f9fc;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #004aad;
+            color: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .school-name {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 28px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.05rem;
+            padding: 6px 14px;
+            border-radius: 4px;
+            transition: background .2s, color .2s;
+        }
+        nav a:hover {
+            background: #fff;
+            color: #004aad;
+        }
+        /* Responsive Menu Button (Hamburger) */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .nav-toggle span {
+            background: #fff;
+            height: 3px;
+            width: 24px;
+            margin: 4px 0;
+            border-radius: 2px;
+        }
+        @media (max-width: 700px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav ul {
+                flex-direction: column;
+                background: #004aad;
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                display: none;
+            }
+            nav ul.active {
+                display: flex;
+            }
+            .nav-toggle {
+                display: flex;
+                margin-left: auto;
+            }
+        }
+
+        /************ Sections ************/
+        section {
+            padding: 50px 0 30px 0;
+            min-height: 340px;
+        }
+        section:nth-child(even) {
+            background: #f0f5fb;
+        }
+        h2 {
+            font-size: 2rem;
+            color: #004aad;
+            font-weight: 600;
+            margin-bottom: 27px;
+            text-align: center;
+        }
+
+        /* Home/Banner Section */
+        .home-banner {
+            display: flex;
+            align-items: center;
+            padding: 40px 0 20px 0;
+            flex-wrap: wrap;
+        }
+        .home-content {
+            flex: 1 1 320px;
+            padding-right: 35px;
+        }
+        .home-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: #004aad;
+        }
+        .home-content p {
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+        }
+        .welcome-btn {
+            background: #004aad;
+            color: #fff;
+            border: none;
+            padding: 13px 32px;
+            border-radius: 4px;
+            font-size: 1.02rem;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: background .18s, transform .18s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .welcome-btn:hover {
+            background: #0062cf;
+            transform: translateY(-2px) scale(1.045);
+        }
+
+        .banner-image {
+            flex: 1 1 280px;
+            min-width: 200px;
+            text-align: center;
+        }
+        .banner-image img {
+            width: 90%;
+            max-width: 350px;
+            border-radius: 18px;
+            box-shadow: 0 5px 24px rgba(0,74,173,0.11);
+        }
+
+        @media (max-width: 850px) {
+            .home-banner { flex-direction: column-reverse; text-align: center;}
+            .home-content, .banner-image { padding: 0; }
+        }
+        @media (max-width:600px) {
+            .container { width:97%; }
+            section { padding:30px 0;}
+        }
+
+        /* About Section */
+        .about-text {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 28px 22px;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,74,173,0.04);
+        }
+
+        /* Courses Section */
+        .courses-list {
+            display: flex;
+            gap: 23px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .course-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,74,173,0.08);
+            padding: 20px 24px;
+            flex: 1 1 240px;
+            max-width: 320px;
+            min-width: 220px;
+            transition: transform .18s, box-shadow .18s;
+            border-top: 5px solid #004aad;
+        }
+        .course-card:hover {
+            transform: translateY(-5px) scale(1.025);
+            box-shadow: 0 8px 28px rgba(0,74,173,0.14);
+            border-top: 5px solid #0062cf;
+        }
+        .course-title {
+            font-size: 1.04rem;
+            font-weight: bold;
+            color: #004aad;
+            margin-bottom: 8px;
+        }
+
+        /* Contact Section */
+        .contact-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 28px 22px;
+            border-radius: 11px;
+            box-shadow: 0 2px 12px rgba(0,74,173,0.045);
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .contact-form label {
+            font-weight: 500;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            color: #004aad;
+            font-size: 1.01rem;
+        }
+        .contact-form input, 
+        .contact-form textarea {
+            padding: 10px;
+            border: 1.2px solid #aad2fa;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: #f7fbff;
+            resize: none;
+            transition: border .16s;
+        }
+        .contact-form input:focus, 
+        .contact-form textarea:focus {
+            outline: none;
+            border: 1.8px solid #004aad;
+            background: #fff;
+        }
+        .contact-form button {
+            margin-top: 18px;
+            background: #004aad;
+            color: #fff;
+            border: none;
+            padding: 13px;
+            border-radius: 4px;
+            font-size: 1.06rem;
+            transition: background .19s, transform .13s;
+            cursor: pointer;
+        }
+        .contact-form button:hover {
+            background: #0062cf;
+            transform: scale(1.05);
+        }
+        .form-error {
+            color: #e52d2d;
+            font-size: 0.97rem;
+            margin-top: 2px;
+            display: none;
+        }
+
+        /* General Utilities */
+        .centered {
+            text-align: center;
+            margin-top: 12px;
+            color: #085efc;
+        }
+        .hidden { display: none; }
+
+        /* Footer */
+        footer {
+            background: #003278;
+            color: #fff;
+            text-align: center;
+            padding: 17px 0 12px 0;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with logo/school name & navigation -->
+    <header>
+        <div class="container header-content">
+            <div class="school-name">Sunrise Public School</div>
+            <nav>
+                <div class="nav-toggle" id="nav-toggle">
+                    <span></span><span></span><span></span>
+                </div>
+                <ul id="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Main website content -->
+    <main>
+        <!-- Home/Banner Section -->
+        <section id="home">
+            <div class="container home-banner">
+                <div class="home-content">
+                    <h1>Welcome to Sunrise Public School</h1>
+                    <p>Your gateway to quality education and a brighter future. We offer an inspiring environment and dedicated faculty to help every student achieve their dreams.</p>
+                    <!-- Interactive Button -->
+                    <button class="welcome-btn" id="welcomeBtn" type="button">Click for Greeting</button>
+                    <div id="welcomeMsg" class="centered hidden"></div>
+                </div>
+                <div class="banner-image">
+                    <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=600&q=80" alt="School Building Banner">
+                </div>
+            </div>
+        </section>
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Our School</h2>
+            <div class="about-text">
+                Sunrise Public School is committed to academic excellence, character development, and holistic growth. Established in 2002, we combine innovative teaching, modern infrastructure, and a warm community so every student can discover their talents and grow into confident, responsible citizens. Our mission is to nurture curiosity, discipline, and creativity in every learner.
+            </div>
+        </section>
+        <!-- Courses Section -->
+        <section id="courses">
+            <h2>Our Popular Courses</h2>
+            <div class="courses-list">
+                <div class="course-card">
+                    <div class="course-title">Science & Mathematics</div>
+                    <div>Dive into powerful concepts and hands-on experiments guided by expert teachers. From Physics to Biology, we make learning fun and meaningful.</div>
+                </div>
+                <div class="course-card">
+                    <div class="course-title">Computer & Coding</div>
+                    <div>Get future-ready! Our tech curriculum covers basics to advanced coding, robotics, and digital literacy, preparing kids for tomorrow’s world.</div>
+                </div>
+                <div class="course-card">
+                    <div class="course-title">Arts & Language</div>
+                    <div>Unleash creativity and master communication through inspiring courses in fine arts, English literature, drama, and public speaking.</div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <div class="contact-wrapper">
+                <form class="contact-form" id="contactForm" autocomplete="off" novalidate>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name">
+                    <span class="form-error" id="nameErr">Please enter your name.</span>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email">
+                    <span class="form-error" id="emailErr">Please enter a valid email.</span>
+
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Your message" rows="4"></textarea>
+                    <span class="form-error" id="msgErr">Please enter a message.</span>
+
+                    <button type="submit">Send Message</button>
+                </form>
+                <div id="contactSuccess" class="centered hidden">Thank you for contacting us! We'll get back to you soon.</div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 Sunrise Public School — All Rights Reserved.
+    </footer>
+
+    <!-- Internal JavaScript for navigation, form validation, and interactivity -->
+    <script>
+        // ======= Responsive Navigation =======
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        navToggle && navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close nav menu on link click (mobile)
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // ======= Interactive Welcome Button =======
+        const welcomeBtn = document.getElementById('welcomeBtn');
+        const welcomeMsg = document.getElementById('welcomeMsg');
+        let welcomeDisplayed = false;
+
+        // On click, show welcome message below button
+        welcomeBtn && welcomeBtn.addEventListener('click', () => {
+            welcomeMsg.textContent = "🎉 Welcome to our school! We're excited to have you here. 🎓";
+            welcomeMsg.classList.remove('hidden');
+            welcomeDisplayed = true;
+            // Auto-hide after 7 seconds
+            setTimeout(() => {
+                welcomeMsg.classList.add('hidden');
+                welcomeDisplayed = false;
+            }, 7000);
+        });
+
+        // ======= Contact Form Validation =======
+        const contactForm = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+
+        // Error elements
+        const nameErr = document.getElementById('nameErr');
+        const emailErr = document.getElementById('emailErr');
+        const msgErr = document.getElementById('msgErr');
+        const contactSuccess = document.getElementById('contactSuccess');
+
+        // Email validation regex
+        function isValidEmail(email) {
+            return /^[\w\.-]+@[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,}$/.test(email);
+        }
+
+        // Hide error helper
+        function hideErrors() {
+            nameErr.style.display = 'none';
+            emailErr.style.display = 'none';
+            msgErr.style.display = 'none';
+        }
+
+        contactForm && contactForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop form from refreshing page
+            hideErrors();
+            let hasError = false;
+
+            // Validate Name
+            if (!nameInput.value.trim()) {
+                nameErr.style.display = 'block';
+                hasError = true;
+            }
+            // Validate Email
+            if (!emailInput.value.trim() || !isValidEmail(emailInput.value.trim())) {
+                emailErr.style.display = 'block';
+                hasError = true;
+            }
+            // Validate Message
+            if (!messageInput.value.trim()) {
+                msgErr.style.display = 'block';
+                hasError = true;
+            }
+            // If no error, simulate successful submission
+            if (!hasError) {
+                contactForm.style.display = 'none';
+                contactSuccess.classList.remove('hidden');
+                setTimeout(() => {
+                    // Reset form and display after a few seconds for repeated submissions
+                    contactForm.reset();
+                    contactSuccess.classList.add('hidden');
+                    contactForm.style.display = '';
+                }, 3500);
+                // Show alert for demo
+                alert("Your message has been sent successfully!");
+            }
+        });
+
+        // Enhance: Hide error message as user starts typing
+        [nameInput, emailInput, messageInput].forEach((input, idx) => {
+            input.addEventListener('input', () => {
+                [nameErr, emailErr, msgErr][idx].style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
